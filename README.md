@@ -1,10 +1,13 @@
 # HammerV2
 - HammerV2 is some DDoS tool that has been remaked by iFanpS & NumeX
+
 Me & NumeX remake this DDoS tool because the old version has been malfunction or cannot be use.
+
 Me implement some code in here like new argument and on attack line.
 
 # New Argument
 I am adding new argument (-l | logs) logs method is used for know when are u ddosing.
+
 I will add new argument soon like can automatically make logs when the site u ddos is Down.
 ```Python
 def get_parameters():
@@ -44,6 +47,7 @@ def get_parameters():
 
 # Attack Method
 The old hammer attack method u can find on github.
+
 But here i remake the attack method to fast attack.
 ```Python
 def down_it():
