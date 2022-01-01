@@ -33,6 +33,7 @@ Connection: keep-alive"""
             elif requests.head(f"http://{host}").status_code != 200:
                 with open("Down.txt","a") as dw:
                     dw.write(f"{host}:{port} has been downed by this tool on Day : {times[0]}, Month : {times[1]}:{times[2]}, Time : {times[3]}, Year : {times[4]}\n")
+                    dw.close()
             else:
                 s.shutdown(1)
                 print("\033[91m shut<->down\033[0m")
