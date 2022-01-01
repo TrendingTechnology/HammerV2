@@ -6,9 +6,13 @@ Me & NumeX remake this DDoS tool because the old version has been malfunction or
 Me implement some code in here like new argument and on attack line.
 
 # New Argument
-I am adding new argument (-l | logs) logs method is used for know when are u ddosing.
-
-I will add new argument soon like can automatically make logs when the site u ddos is Down.
+- Added logs when the host u attack down.
+```Python
+elif requests.head(f"http://{host}").status_code != 200:
+                with open("Down.txt","a") as dw:
+                    dw.write(f"{host}:{port} has been downed by this tool on Day : {times[0]}, Month : {times[1]}:{times[2]}, Time : {times[3]}, Year : {times[4]}\n")
+```
+- I am adding new argument (-l | logs) logs method is used for know when are u ddosing.
 ```Python
 def get_parameters():
     global host
