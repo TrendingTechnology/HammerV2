@@ -13,7 +13,7 @@ def proxy():
     global prox
     with open("proxy.txt","r") as pr:
         key = pr.readlines() # reading proxy
-    for i in range(30):
+    for i in range(len(key)):
         prox = random.choice(key).split(":")
 
 def down_it():
