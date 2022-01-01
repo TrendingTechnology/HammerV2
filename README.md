@@ -6,7 +6,7 @@ Me & NumeX remake this DDoS tool because the old version has been malfunction or
 Me implement some code in here like new argument and on attack line.
 
 # New Argument
-- Added logs when the host u attack down.
+- Added logs when the host u attack is down.
 ```Python
 elif requests.head(f"http://{host}").status_code != 200:
                 with open("Down.txt","a") as dw:
